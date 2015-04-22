@@ -55,7 +55,9 @@ echo "\$PKG_CONFIG_PATH:/app/vendor/vips/lib/pkgconfig" > $3/PKG_CONFIG_PATH
 mkdir -p $BUILD_DIR/.profile.d
 cp -n $BP_DIR/.profile.d/* $BUILD_DIR/.profile.d/
 
-source $BUILD_DIR/.profile.d/vips.sh
+export PATH="$PATH:$HOME/vendor/vips/bin"
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOME/vendor/vips/lib/pkgconfig"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/vendor/vips/lib"
 
 #
 # Go install
