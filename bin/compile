@@ -1,6 +1,66 @@
 #!/bin/bash
 # usage: bin/compile <build-dir> <cache-dir> <env-dir>
 
+#
+# libvips install
+#
+
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
+arrow() {
+  sed -u 's/^/-----> /'
+}
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENVFILE=$3
+BP_DIR=`cd $(dirname $0); cd ..; pwd`
+
+echo "Installing libvips" | arrow
+
+cd $BUILD_DIR
+
+output_dir="${BUILD_DIR}/vendor/vips"
+# Output library also to temp dir accordingly to pkg-config paths
+temp_app_dir="/app/vendor/vips"
+mkdir -p $output_dir
+mkdir -p $temp_app_dir
+
+echo "Downloading libvips and unpacking" | indent
+curl -s https://s3-eu-west-1.amazonaws.com/visup-misc/heroku-buildpack-vips/201503311000.tar.gz | tar xz -C $output_dir
+
+if [ $? != 0 ]; then
+  echo "Error downloading vips and unpacking to build dir" | indent
+  exit 1
+fi
+
+curl -s https://s3-eu-west-1.amazonaws.com/visup-misc/heroku-buildpack-vips/201503311000.tar.gz | tar xz -C $temp_app_dir
+
+if [ $? != 0 ]; then
+  echo "Error downloading vips and unpacking to app dir" | indent
+  exit 1
+fi
+mkdir -p $BUILD_DIR/bin/
+cp -r $output_dir/bin/* $BUILD_DIR/bin/
+
+echo "libvips installed" | indent
+echo "\$PKG_CONFIG_PATH:/app/vendor/vips/lib/pkgconfig" > $3/PKG_CONFIG_PATH
+
+mkdir -p $BUILD_DIR/.profile.d
+cp -n $BP_DIR/.profile.d/* $BUILD_DIR/.profile.d/
+
+source $BUILD_DIR/.profile.d/vips.sh
+
+#
+# Go install
+#
+
 set -eo pipefail
 
 # Go releases for Darwin beginning with 1.2rc1
