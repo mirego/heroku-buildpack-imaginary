@@ -14,3 +14,5 @@ Please, read the imaginary [documentation](https://github.com/h2non/imaginary#he
 - libvips buildpack - https://github.com/alex88/heroku-buildpack-vips
 - Go buildpack - https://github.com/kr/heroku-buildpack-go
 
+[go]: http://golang.org/
+[buildpack]: http://devcenter.heroku.com/articles/buildpacks
