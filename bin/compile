@@ -52,9 +52,6 @@ cp -r $output_dir/bin/* $BUILD_DIR/bin/
 echo "libvips installed" | indent
 echo "\$PKG_CONFIG_PATH:/app/vendor/vips/lib/pkgconfig" > $3/PKG_CONFIG_PATH
 
-mkdir -p $BUILD_DIR/.profile.d
-cp -n $BP_DIR/.profile.d/* $BUILD_DIR/.profile.d/
-
 export PATH="$PATH:$HOME/vendor/vips/bin"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOME/vendor/vips/lib/pkgconfig"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/vendor/vips/lib"
