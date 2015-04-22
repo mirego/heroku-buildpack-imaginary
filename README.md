@@ -16,3 +16,4 @@ Please, read the imaginary [documentation](https://github.com/h2non/imaginary#he
 
 [go]: http://golang.org/
 [buildpack]: http://devcenter.heroku.com/articles/buildpacks
+[imaginary]: https://github.com/h2non/imaginary
