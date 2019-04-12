@@ -31,6 +31,33 @@ cp -r $BUILD_DIR/.apt/app/vendor /app
 source $BUILD_DIR/.profile.d/vips.sh
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$BUILD_DIR/.apt/app/vendor/vips/lib/pkgconfig"
 
+
+
+###############
+#   CFITSIO   #
+###############
+
+echo -n "       CFITSIO..."
+
+# Download CFITSIO dependency
+curl -L ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfitsio3370.tar.gz -o cfitsio.tar.gz
+# Unzip
+tar -xvf cfitsio.tar.gz
+# Get into CFITSIO folder
+cd cfitsio
+# Configure build
+./configure --prefix $OUT_PATH
+# Make cfitsio
+make
+# Install cfitsio
+make install
+
+# Build path
+cd $BUILD_PATH
+
+echo " done"
+
+
 #
 # Go install
 #
