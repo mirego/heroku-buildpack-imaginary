@@ -182,6 +182,10 @@ if test -e $build/Godeps
 then
     echo "-----> Running: godep go install -tags heroku ./..."
     godep go install -tags heroku ./...
+elif test -f $build/Gopkg.toml
+then
+    echo "-----> Running: dep ensure"
+    dep ensure
 else
     echo "-----> Running: go get -tags heroku ./..."
     go get -tags heroku ./...
